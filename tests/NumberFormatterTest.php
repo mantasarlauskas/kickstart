@@ -18,33 +18,32 @@ class NumberFormatterTest extends TestCase
         $this->numberFormatter = new NumberFormatter();
     }
 
-    public function testMillionFormatting()
+    /**
+     * @return array
+     */
+    public function providerFormatNumber(): array
     {
-        $this->assertEquals('2.84M', $this->numberFormatter->format(2835779));
-        $this->assertEquals('1.00M', $this->numberFormatter->format(999500));
+        return [
+            ['2.84M', 2835779],
+            ['1.00M', 999500],
+            ['535K', 535216],
+            ['100K', 99950],
+            ['27 534', 27533.78],
+            ['1 000', 999.9999],
+            ['533.10', 533.1],
+            ['66.67', 66.6666],
+            ['12.00', 12],
+            ['-124K', -123654.89]
+        ];
     }
 
-    public function testHundredsThousands()
+    /**
+     * @dataProvider providerFormatNumber
+     * @param string $expectedValue
+     * @param float $givenValue
+     */
+    public function testFormatNumber(string $expectedValue, float $givenValue)
     {
-        $this->assertEquals('535K', $this->numberFormatter->format(535216));
-        $this->assertEquals('100K', $this->numberFormatter->format(99950));
-    }
-
-    public function testThousands()
-    {
-        $this->assertEquals('27 534', $this->numberFormatter->format(27533.78));
-        $this->assertEquals('1 000', $this->numberFormatter->format(999.9999));
-    }
-
-    public function testDefault()
-    {
-        $this->assertEquals('533.10', $this->numberFormatter->format( 533.1));
-        $this->assertEquals('66.67', $this->numberFormatter->format(66.6666));
-        $this->assertEquals('12.00', $this->numberFormatter->format(12));
-    }
-    
-    public function testNegative()
-    {
-        $this->assertEquals('-124K', $this->numberFormatter->format(-123654.89));
+        $this->assertEquals($expectedValue, $this->numberFormatter->format($givenValue));
     }
 }
