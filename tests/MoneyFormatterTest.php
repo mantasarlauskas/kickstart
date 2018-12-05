@@ -9,10 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 class MoneyFormatterTest extends TestCase
 {
-    /**
-     * @var MoneyFormatter $moneyFormatter
-     */
-    private $moneyFormatter;
 
     /** @var NumberFormatter|MockObject $numberFormatter */
     private $numberFormatter;
@@ -39,12 +35,12 @@ class MoneyFormatterTest extends TestCase
         $this->addCase(2, 2835779, '2.84M');
         $this->addCase(3, 211.99, '211.99');
 
-        $this->moneyFormatter = new MoneyFormatter($this->numberFormatter);
+        $moneyFormatter = new MoneyFormatter($this->numberFormatter);
 
-        $this->assertEquals('2.84M €', $this->moneyFormatter->formatEur(2835779));
-        $this->assertEquals('211.99 €', $this->moneyFormatter->formatEur(211.99));
+        $this->assertEquals('2.84M €', $moneyFormatter->formatEur(2835779));
+        $this->assertEquals('211.99 €', $moneyFormatter->formatEur(211.99));
 
-        $this->assertEquals('$2.84M', $this->moneyFormatter->formatUsd(2835779));
-        $this->assertEquals('$211.99', $this->moneyFormatter->formatUsd(211.99));
+        $this->assertEquals('$2.84M', $moneyFormatter->formatUsd(2835779));
+        $this->assertEquals('$211.99', $moneyFormatter->formatUsd(211.99));
     }
 }
